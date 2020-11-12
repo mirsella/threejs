@@ -43,7 +43,7 @@
                 var middle = new THREE.Vector3();
                 geometry.computeBoundingBox();
                 geometry.boundingBox.getCenter(middle);
-                mesh.geometry.applyMatrix(new THREE.Matrix4().makeTranslation( 
+                mesh.geometry.applyMatrix4(new THREE.Matrix4().makeTranslation( 
                       -middle.x, -middle.y, -middle.z ) );
                 var largestDimension = Math.max(geometry.boundingBox.max.x,
                       geometry.boundingBox.max.y, 
