@@ -7,12 +7,22 @@
     <title>Document</title>
   </head>
   <body>
+    <input type="file" name="stlfile" id="stlfile" value="choose a STL file" accept=".stl" onchange="loadfilestl(event)">
     <div id="model" style="width: 100%; height: 500px"> </div>
   </body>
   <script src="three.min.js"></script>
   <script src="STLLoader.js"></script>
   <script src="OrbitControls.js"></script>
   <script type="text/javascript">
+    function loadfilestl(e) {
+          var file = e.target.files[0]
+          var reader = new FileReader()
+          // stlfile = reader.readAsArrayBuffer(stlfile)
+          reader.onload = (e) => {
+              STLViewer(e.target.result, "model")
+          }
+          reader.readAsArrayBuffer(file)
+      }
     function STLViewer(model, elementID) {
           var elem = document.getElementById(elementID)
           var camera = new THREE.PerspectiveCamera(70, elem.clientWidth/elem.clientHeight, 1, 1000);
@@ -43,7 +53,7 @@
                 var middle = new THREE.Vector3();
                 geometry.computeBoundingBox();
                 geometry.boundingBox.getCenter(middle);
-                mesh.geometry.applyMatrix(new THREE.Matrix4().makeTranslation( 
+                mesh.geometry.applyMatrix4(new THREE.Matrix4().makeTranslation( 
                       -middle.x, -middle.y, -middle.z ) );
                 var largestDimension = Math.max(geometry.boundingBox.max.x,
                       geometry.boundingBox.max.y, 
@@ -59,7 +69,7 @@
               });
         }
         window.onload = function() {
-              STLViewer("earthmap.stl", "model")
-            }
+              // STLViewer("earthmap.stl", "model")
+          }
   </script>
 </html>
